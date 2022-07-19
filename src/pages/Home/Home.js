@@ -1,5 +1,5 @@
 import React from "react";
-import QuotesList from "../../components/UI/Quotes List/QuotesList";
+import QuotesList from "../../components/Quotes List/QuotesList";
 
 const Home = () => {
   return (

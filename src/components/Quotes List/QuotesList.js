@@ -1,8 +1,9 @@
 import { Pagination } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { useHttp } from "../../../hooks/use-http";
-import Card from "../Card/Card";
+import { useHttp } from "../../hooks/use-http";
+import Card from "../UI/Card/Card";
 import classes from "./QuotesList.module.css";
+import LoadingSpinner from "../UI/Loading Spinner/LoadingSpinner";
 
 const QuotesList = (props) => {
   const { isLoading, error, clearError, sendRequest } = useHttp();
@@ -23,6 +24,10 @@ const QuotesList = (props) => {
 
     fetchQuotes();
   }, [sendRequest, currentPage]);
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
 
   if (quotes.length === 0) return <h1>No quotes were found</h1>;
 
