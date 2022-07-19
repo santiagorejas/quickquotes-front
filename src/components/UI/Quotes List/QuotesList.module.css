@@ -1,0 +1,22 @@
+.quotes-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  list-style: none;
+  max-width: 75rem;
+  margin: auto;
+}
+
+.quote {
+  cursor: pointer;
+  transition: box-shadow 300ms;
+}
+
+.quote:hover {
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+.quote__author {
+  text-align: right;
+  font-style: italic;
+}

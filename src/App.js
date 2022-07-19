@@ -8,10 +8,6 @@ import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
 
 function App() {
-  const auth = useContext(AuthContext);
-
-  console.log(auth.token);
-
   return (
     <div className="App">
       <Logo />
