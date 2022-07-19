@@ -1,0 +1,28 @@
+.auth {
+  width: 95%;
+  max-width: 30rem;
+  margin: auto;
+  background-color: #3a3e4b;
+}
+
+.auth__form {
+  display: grid;
+  gap: 1rem;
+  text-align: left;
+}
+
+.auth__input {
+  background-color: #eee;
+  border-radius: 0.5rem;
+  width: 100%;
+}
+
+.auth__input-container {
+  width: 100%;
+}
+
+.error-text {
+  color: red;
+  font-weight: bold;
+  margin-top: 0.5rem;
+}
