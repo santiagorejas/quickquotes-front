@@ -75,7 +75,7 @@ const LoginPage = () => {
             <p className={classes["error-text"]}>{formik.errors.password}</p>
           )}
         </div>
-        <Button variant="outlined" type="submit">
+        <Button variant="outlined" type="submit" disabled={isLoading}>
           Login
         </Button>
       </form>

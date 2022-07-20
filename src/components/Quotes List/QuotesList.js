@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 const QuotesList = (props) => {
   const { isLoading, error, clearError, sendRequest } = useHttp();
-  const [quotes, setQuotes] = useState([]);
+  const [quotes, setQuotes] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageCount, setPageCount] = useState(null);
   const navigate = useNavigate();
@@ -27,7 +27,7 @@ const QuotesList = (props) => {
     fetchQuotes();
   }, [sendRequest, currentPage]);
 
-  if (isLoading) {
+  if (isLoading || !quotes) {
     return <LoadingSpinner />;
   }
 
