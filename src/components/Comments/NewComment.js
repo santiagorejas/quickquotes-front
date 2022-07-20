@@ -7,6 +7,7 @@ import { useHttp } from "../../hooks/use-http";
 import { AuthContext } from "../../context/AuthContext";
 
 import classes from "../../styles/Forms.module.css";
+import Message from "../UI/Message/Message";
 
 const NewComment = (props) => {
   const { isLoading, error, clearError, sendRequest } = useHttp();
@@ -43,7 +44,7 @@ const NewComment = (props) => {
   });
 
   if (!isLoggedIn) {
-    return <h1>Para comentar, necesitas estar loggeado.</h1>;
+    return <Message>You must be logged in to comment.</Message>;
   }
 
   return (

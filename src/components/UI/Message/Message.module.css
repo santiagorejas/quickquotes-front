@@ -1,0 +1,14 @@
+.message {
+  max-width: none;
+  background-color: #3a3e4b;
+}
+
+.message h1 {
+  font-weight: 300;
+  display: inline;
+}
+
+.message i {
+  font-size: 2rem;
+  margin-right: 1rem;
+}

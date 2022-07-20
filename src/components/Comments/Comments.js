@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { useHttp } from "../../hooks/use-http";
+import Message from "../UI/Message/Message";
 
 import classes from "./Comments.module.css";
 
@@ -24,7 +25,8 @@ const Comments = (props) => {
     }
   };
 
-  if (props.comments.length === 0) return <h1>No comments were found.</h1>;
+  if (props.comments.length === 0)
+    return <Message>No comments were found.</Message>;
 
   console.log("Nickname: ", nickname);
 

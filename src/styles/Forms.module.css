@@ -1,7 +1,7 @@
 .form__container {
-  width: 95%;
+  width: 100%;
   max-width: 30rem;
-  margin: auto;
+  margin: inherit auto;
   background-color: #3a3e4b;
 }
 
