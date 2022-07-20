@@ -37,7 +37,11 @@ const QuotesList = (props) => {
           {quotes.map((quote) => (
             <li onClick={() => navigate(`/quote/${quote._id}`)}>
               <Card className={classes["quote"]}>
-                <h3 className={classes["quote__content"]}>{quote.content}</h3>
+                <div className={classes["quote__content"]}>
+                  <i className="fa-solid fa-quote-left"></i>
+                  <h3>{quote.content}</h3>
+                  <i className="fa-solid fa-quote-right"></i>
+                </div>
                 <p className={classes["quote__author"]}>{quote.author}</p>
               </Card>
             </li>

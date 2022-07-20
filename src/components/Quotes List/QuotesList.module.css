@@ -19,6 +19,9 @@
   cursor: pointer;
   transition: box-shadow 300ms;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .quote:hover {
@@ -28,6 +31,8 @@
 .quote__author {
   text-align: right;
   font-style: italic;
+  align-self: flex-end;
+  margin-top: 1rem;
 }
 
 .quotes-list__pagination {
@@ -36,4 +41,23 @@
   width: inherit;
   padding: 0.5rem;
   margin-top: 2rem;
+}
+
+.quote__content i {
+  font-size: 1rem;
+  margin-inline: 1rem;
+}
+
+.quote__content i:first-child {
+  align-self: flex-start;
+}
+
+.quote__content i:last-child {
+  align-self: flex-end;
+}
+
+.quote__content h3 {
+  display: inline;
+  font-size: 1.5rem;
+  font-weight: 300;
 }

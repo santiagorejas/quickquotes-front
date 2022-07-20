@@ -17,6 +17,14 @@
   margin-inline: 1rem;
 }
 
+.quote-details__content i:first-child {
+  align-self: flex-start;
+}
+
+.quote-details__content i:last-child {
+  align-self: flex-end;
+}
+
 .quote-details__content h1 {
   display: inline;
   font-weight: 300;
