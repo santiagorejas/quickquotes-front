@@ -2,3 +2,21 @@
   max-width: 50rem;
   margin: auto;
 }
+
+.quote-details__content {
+  font-size: 1.5rem;
+  font-style: italic;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.quote-details__content i {
+  font-size: 2rem;
+  margin-inline: 1rem;
+}
+
+.quote-details__content h1 {
+  display: inline;
+  font-weight: 300;
+}

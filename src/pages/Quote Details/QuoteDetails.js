@@ -35,7 +35,11 @@ const QuoteDetails = () => {
 
   return (
     <Card className={classes["quote-details"]}>
-      <h1>{quoteDetails.content}</h1>
+      <div className={classes["quote-details__content"]}>
+        <i className="fa-solid fa-quote-left"></i>
+        <h1>{quoteDetails.content}</h1>
+        <i className="fa-solid fa-quote-right"></i>
+      </div>
       <h2>Comments</h2>
       <NewComment quoteId={qid} />
     </Card>
