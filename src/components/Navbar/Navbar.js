@@ -10,7 +10,7 @@ const activeLinkStyle = {
 };
 
 const Navbar = () => {
-  const { isLoggedIn } = useContext(AuthContext);
+  const { isLoggedIn, logout } = useContext(AuthContext);
 
   return (
     <nav className={classes["navbar"]}>
@@ -39,14 +39,14 @@ const Navbar = () => {
         )}
         {isLoggedIn && (
           <li>
-            <NavLink
-              to="/logout"
+            <button
+              onClick={logout}
               className={classes["navbar__link"]}
-              style={({ isActive }) => (isActive ? activeLinkStyle : undefined)}
+              style={{ background: "none", border: "none", cursor: "pointer" }}
             >
               <i className="fa-solid fa-arrow-right-from-bracket"></i>
               <span>Logout</span>
-            </NavLink>
+            </button>
           </li>
         )}
         <li>
