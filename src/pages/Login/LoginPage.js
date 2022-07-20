@@ -6,10 +6,12 @@ import { AuthContext } from "../../context/AuthContext";
 import { useFormik } from "formik";
 import { useHttp } from "../../hooks/use-http";
 import * as Yup from "yup";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const { login } = useContext(AuthContext);
   const { isLoading, error, clearError, sendRequest } = useHttp();
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
@@ -33,8 +35,8 @@ const LoginPage = () => {
             "Content-Type": "application/json",
           }
         );
-        console.log("DATA: ", data);
         login(data.id, data.token, data.nickname);
+        navigate("/");
       } catch (err) {
         console.log(err);
       }

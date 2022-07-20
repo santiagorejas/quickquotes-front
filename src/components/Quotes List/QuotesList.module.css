@@ -1,15 +1,24 @@
+.quotes-list-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .quotes-list {
+  width: 95%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
   list-style: none;
   max-width: 75rem;
-  margin: auto;
 }
 
 .quote {
+  margin: 0 !important;
   cursor: pointer;
   transition: box-shadow 300ms;
+  height: 100%;
 }
 
 .quote:hover {
@@ -19,4 +28,12 @@
 .quote__author {
   text-align: right;
   font-style: italic;
+}
+
+.quotes-list__pagination {
+  background-color: #eee;
+  border-radius: 1rem;
+  width: inherit;
+  padding: 0.5rem;
+  margin-top: 2rem;
 }

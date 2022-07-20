@@ -27,29 +27,27 @@ const QuotesList = (props) => {
     fetchQuotes();
   }, [sendRequest, currentPage]);
 
-  if (isLoading || !quotes) {
-    return <LoadingSpinner />;
-  }
-
-  if (quotes.length === 0) return <h1>No quotes were found</h1>;
+  if (quotes?.length === 0) return <h1>No quotes were found</h1>;
 
   return (
-    <div>
-      <ul className={classes["quotes-list"]}>
-        {quotes.map((quote) => (
-          <li
-            className={classes["quote"]}
-            onClick={() => navigate(`/quote/${quote._id}`)}
-          >
-            <Card>
-              <h3 className={classes["quote__content"]}>{quote.content}</h3>
-              <p className={classes["quote__author"]}>{quote.author}</p>
-            </Card>
-          </li>
-        ))}
-      </ul>
+    <div className={classes["quotes-list-container"]}>
+      {(isLoading || !quotes) && <LoadingSpinner />}
+      {!isLoading && quotes && (
+        <ul className={classes["quotes-list"]}>
+          {quotes.map((quote) => (
+            <li onClick={() => navigate(`/quote/${quote._id}`)}>
+              <Card className={classes["quote"]}>
+                <h3 className={classes["quote__content"]}>{quote.content}</h3>
+                <p className={classes["quote__author"]}>{quote.author}</p>
+              </Card>
+            </li>
+          ))}
+        </ul>
+      )}
       <Pagination
         count={pageCount}
+        variant="outlined"
+        className={classes["quotes-list__pagination"]}
         onChange={(e) => {
           setCurrentPage(e.currentTarget.textContent);
         }}
