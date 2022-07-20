@@ -5,6 +5,7 @@ import { useHttp } from "../../hooks/use-http";
 import LoadingSpinner from "../../components/UI/Loading Spinner/LoadingSpinner";
 import classes from "./QuoteDetails.module.css";
 import NewComment from "../../components/Comments/NewComment";
+import Comments from "../../components/Comments/Comments";
 
 const QuoteDetails = () => {
   const { qid } = useParams();
@@ -40,7 +41,7 @@ const QuoteDetails = () => {
         <h1>{quoteDetails.content}</h1>
         <i className="fa-solid fa-quote-right"></i>
       </div>
-      <h2>Comments</h2>
+      <Comments comments={comments} />
       <NewComment quoteId={qid} />
     </Card>
   );
