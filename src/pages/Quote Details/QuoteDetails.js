@@ -15,6 +15,14 @@ const QuoteDetails = () => {
   const [comments, setComments] = useState([]);
   const [quoteDetails, setQuoteDetails] = useState(null);
 
+  const onAddCommentHandler = (comment) => {
+    setComments((pre) => [...pre, comment]);
+  };
+
+  const onDeleteCommentHandler = (cid) => {
+    setComments((pre) => pre.filter((comment) => comment._id !== cid));
+  };
+
   useEffect(() => {
     const fetchQuoteDetails = async () => {
       try {
@@ -41,8 +49,8 @@ const QuoteDetails = () => {
         <h1>{quoteDetails.content}</h1>
         <i className="fa-solid fa-quote-right"></i>
       </div>
-      <Comments comments={comments} />
-      <NewComment quoteId={qid} />
+      <Comments comments={comments} onDeleteComment={onDeleteCommentHandler} />
+      <NewComment quoteId={qid} onAddComment={onAddCommentHandler} />
     </Card>
   );
 };

@@ -33,7 +33,8 @@ const LoginPage = () => {
             "Content-Type": "application/json",
           }
         );
-        login(data.id, data.token);
+        console.log("DATA: ", data);
+        login(data.id, data.token, data.nickname);
       } catch (err) {
         console.log(err);
       }

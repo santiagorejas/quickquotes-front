@@ -35,6 +35,7 @@ const NewComment = (props) => {
           }
         );
         resetForm();
+        props.onAddComment(data.comment);
       } catch (err) {
         console.log(err);
       }
