@@ -41,9 +41,9 @@ const LoginPage = () => {
   });
 
   return (
-    <Card className={classes["auth"]}>
-      <form className={classes["auth__form"]} onSubmit={formik.handleSubmit}>
-        <div className={classes["auth__input-container"]}>
+    <Card className={classes["form__container"]}>
+      <form className={classes["form"]} onSubmit={formik.handleSubmit}>
+        <div className={classes["form__input-container"]}>
           <TextField
             placeholder="User"
             name="user"
@@ -52,13 +52,13 @@ const LoginPage = () => {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             variant="outlined"
-            className={classes["auth__input"]}
+            className={classes["form__input"]}
           />
           {formik.errors.user && formik.touched.user && (
             <p className={classes["error-text"]}>{formik.errors.user}</p>
           )}
         </div>
-        <div className={classes["auth__input-container"]}>
+        <div className={classes["form__input-container"]}>
           <TextField
             placeholder="Password"
             name="password"
@@ -68,7 +68,7 @@ const LoginPage = () => {
             onBlur={formik.handleBlur}
             variant="outlined"
             type="password"
-            className={classes["auth__input"]}
+            className={classes["form__input"]}
           />
           {formik.errors.password && formik.touched.password && (
             <p className={classes["error-text"]}>{formik.errors.password}</p>

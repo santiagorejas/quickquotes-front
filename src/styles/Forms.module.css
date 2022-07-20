@@ -1,23 +1,23 @@
-.auth {
+.form__container {
   width: 95%;
   max-width: 30rem;
   margin: auto;
   background-color: #3a3e4b;
 }
 
-.auth__form {
+.form {
   display: grid;
   gap: 1rem;
   text-align: left;
 }
 
-.auth__input {
+.form__input {
   background-color: #eee;
   border-radius: 0.5rem;
   width: 100%;
 }
 
-.auth__input-container {
+.form__input-container {
   width: 100%;
 }
 
