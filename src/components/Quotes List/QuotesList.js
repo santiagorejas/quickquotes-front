@@ -4,12 +4,14 @@ import { useHttp } from "../../hooks/use-http";
 import Card from "../UI/Card/Card";
 import classes from "./QuotesList.module.css";
 import LoadingSpinner from "../UI/Loading Spinner/LoadingSpinner";
+import { useNavigate } from "react-router-dom";
 
 const QuotesList = (props) => {
   const { isLoading, error, clearError, sendRequest } = useHttp();
   const [quotes, setQuotes] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageCount, setPageCount] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchQuotes = async () => {
@@ -35,7 +37,10 @@ const QuotesList = (props) => {
     <div>
       <ul className={classes["quotes-list"]}>
         {quotes.map((quote) => (
-          <li className={classes["quote"]}>
+          <li
+            className={classes["quote"]}
+            onClick={() => navigate(`/quote/${quote._id}`)}
+          >
             <Card>
               <h3 className={classes["quote__content"]}>{quote.content}</h3>
               <p className={classes["quote__author"]}>{quote.author}</p>
