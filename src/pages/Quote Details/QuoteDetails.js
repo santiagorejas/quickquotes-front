@@ -111,6 +111,12 @@ const QuoteDetails = () => {
         <h1>{quoteDetails.content}</h1>
         <i className="fa-solid fa-quote-right"></i>
       </div>
+      <h3
+        className={classes["quote-details__author"]}
+        onClick={() => navigate(`/user/${quoteDetails.author}`)}
+      >
+        {quoteDetails.author}
+      </h3>
       <Button
         className={classes["quote-details__btn"]}
         onClick={addToFavorites}

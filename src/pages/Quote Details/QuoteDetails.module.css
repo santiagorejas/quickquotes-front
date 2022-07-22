@@ -38,3 +38,10 @@
 .quote-details__btn span {
   margin-left: 0.5rem;
 }
+
+.quote-details__author {
+  font-weight: 200;
+  margin: 1rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+}

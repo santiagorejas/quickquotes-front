@@ -10,7 +10,7 @@ const activeLinkStyle = {
 };
 
 const Navbar = () => {
-  const { isLoggedIn, logout } = useContext(AuthContext);
+  const { isLoggedIn, logout, nickname } = useContext(AuthContext);
 
   return (
     <nav className={classes["navbar"]}>
@@ -58,6 +58,18 @@ const Navbar = () => {
             >
               <i className="fa-solid fa-heart"></i>
               <span>Favorites</span>
+            </NavLink>
+          </li>
+        )}
+        {isLoggedIn && (
+          <li>
+            <NavLink
+              to={`/user/${nickname}`}
+              className={classes["navbar__link"]}
+              style={({ isActive }) => (isActive ? activeLinkStyle : undefined)}
+            >
+              <i className="fa-solid fa-angles-right"></i>
+              <span>My Quotes</span>
             </NavLink>
           </li>
         )}
