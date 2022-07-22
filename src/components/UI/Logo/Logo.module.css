@@ -27,3 +27,9 @@
     background-size: 300% 300%;
   }
 }
+
+@media (max-width: 45rem) {
+  .logo-container {
+    font-size: 4rem;
+  }
+}

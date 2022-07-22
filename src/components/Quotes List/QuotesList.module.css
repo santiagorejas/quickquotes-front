@@ -6,9 +6,13 @@
 }
 
 .quotes-list {
+  --auto-grid-min-size: 24rem;
   width: 95%;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(var(--auto-grid-min-size), 1fr)
+  );
   gap: 1.5rem;
   list-style: none;
   max-width: 75rem;
