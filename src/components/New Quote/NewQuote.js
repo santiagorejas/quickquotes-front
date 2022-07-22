@@ -8,7 +8,7 @@ import { AuthContext } from "../../context/AuthContext";
 import { useHttp } from "../../hooks/use-http";
 
 const NewQuote = (props) => {
-  const { token } = useContext(AuthContext);
+  const { token, isLoggedIn } = useContext(AuthContext);
   const { isLoading, sendRequest } = useHttp();
 
   const formik = useFormik({
@@ -51,11 +51,20 @@ const NewQuote = (props) => {
           multiline
           rows={3}
           className={classes["form__input"]}
+          placeholder={
+            isLoggedIn
+              ? "Write your quote..."
+              : "You must be logged for creating a quote."
+          }
         />
         {formik.errors.content && (
           <p className={classes["error-text"]}>{formik.errors.content}</p>
         )}
-        <Button type="submit" variant="outlined" disabled={isLoading}>
+        <Button
+          type="submit"
+          variant="outlined"
+          disabled={isLoading || !isLoggedIn}
+        >
           Post quote
         </Button>
       </form>

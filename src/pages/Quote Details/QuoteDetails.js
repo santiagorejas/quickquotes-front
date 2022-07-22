@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Card from "../../components/UI/Card/Card";
 import { useHttp } from "../../hooks/use-http";
 import LoadingSpinner from "../../components/UI/Loading Spinner/LoadingSpinner";
@@ -14,11 +14,12 @@ const QuoteDetails = () => {
 
   const { isLoading, error, clearError, sendRequest } = useHttp();
 
-  const { isFavorite, addFavorite } = useContext(AuthContext);
+  const { isFavorite, addFavorite, token, nickname } = useContext(AuthContext);
 
   const [comments, setComments] = useState([]);
   const [quoteDetails, setQuoteDetails] = useState(null);
   const [quoteLiked, setQuoteLiked] = useState(isFavorite(qid));
+  const navigate = useNavigate();
 
   const onAddCommentHandler = (comment) => {
     setComments((pre) => [...pre, comment]);
@@ -52,6 +53,22 @@ const QuoteDetails = () => {
     });
   };
 
+  const deleteQuote = async () => {
+    try {
+      const data = await sendRequest(
+        `${process.env.REACT_APP_API}/quote/${qid}`,
+        "DELETE",
+        null,
+        {
+          Authorization: `Bearer ${token}`,
+        }
+      );
+      navigate("/");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   if (isLoading || !quoteDetails) return <LoadingSpinner />;
 
   return (
@@ -62,7 +79,7 @@ const QuoteDetails = () => {
         <i className="fa-solid fa-quote-right"></i>
       </div>
       <Button
-        className={classes["quote-details__fav-btn"]}
+        className={classes["quote-details__btn"]}
         onClick={addToFavorites}
       >
         <i
@@ -71,6 +88,12 @@ const QuoteDetails = () => {
         ></i>
         <span>{quoteLiked ? "Remove from favorites" : "Add to favorites"}</span>
       </Button>
+      {quoteDetails.author === nickname && (
+        <Button className={classes["quote-details__btn"]} onClick={deleteQuote}>
+          <i className="fa-solid fa-heart"></i>
+          <span>Delete quote</span>
+        </Button>
+      )}
       <Comments comments={comments} onDeleteComment={onDeleteCommentHandler} />
       <NewComment quoteId={qid} onAddComment={onAddCommentHandler} />
     </Card>
