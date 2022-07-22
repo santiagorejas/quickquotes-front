@@ -5,7 +5,7 @@ import classes from "./QuotesList.module.css";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 
-const QuotesList = ({ quotes, pageCount, setCurrentPage }) => {
+const QuotesList = ({ quotes, pageCount, setCurrentPage, currentPage }) => {
   const navigate = useNavigate();
 
   const { isFavorite } = useContext(AuthContext);
@@ -34,6 +34,7 @@ const QuotesList = ({ quotes, pageCount, setCurrentPage }) => {
         ))}
       </ul>
       <Pagination
+        defaultPage={currentPage}
         count={pageCount}
         variant="outlined"
         className={classes["quotes-list__pagination"]}

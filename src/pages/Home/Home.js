@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import NewQuote from "../../components/New Quote/NewQuote";
 import QuotesList from "../../components/Quotes List/QuotesList";
 import LoadingSpinner from "../../components/UI/Loading Spinner/LoadingSpinner";
 import { useHttp } from "../../hooks/use-http";
@@ -8,6 +9,10 @@ const Home = () => {
   const [quotes, setQuotes] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageCount, setPageCount] = useState(null);
+
+  const onAddQuote = (quote) => {
+    if (currentPage === 1) setQuotes((pre) => [quote, ...pre].slice(0, 12));
+  };
 
   useEffect(() => {
     const fetchQuotes = async () => {
@@ -27,15 +32,17 @@ const Home = () => {
 
   return (
     <div>
+      <NewQuote onAddQuote={onAddQuote} />
       {(isLoading || !quotes) && <LoadingSpinner />}
       {!isLoading && quotes && (
         <QuotesList
           URL={`${process.env.REACT_APP_API}/quote`}
           quotes={quotes}
           pageCount={pageCount}
-          setCurrentPage={(e) => {
-            setCurrentPage(e.currentTarget.textContent);
+          setCurrentPage={(e, value) => {
+            setCurrentPage(value);
           }}
+          currentPage={currentPage}
         />
       )}
     </div>
