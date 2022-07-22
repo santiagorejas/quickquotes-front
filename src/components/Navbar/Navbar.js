@@ -28,6 +28,18 @@ const Navbar = () => {
         {!isLoggedIn && (
           <li>
             <NavLink
+              to="/signup"
+              className={classes["navbar__link"]}
+              style={({ isActive }) => (isActive ? activeLinkStyle : undefined)}
+            >
+              <i className="fa-solid fa-arrow-right-to-bracket"></i>
+              <span>Signup</span>
+            </NavLink>
+          </li>
+        )}
+        {!isLoggedIn && (
+          <li>
+            <NavLink
               to="/login"
               className={classes["navbar__link"]}
               style={({ isActive }) => (isActive ? activeLinkStyle : undefined)}

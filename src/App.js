@@ -10,6 +10,7 @@ import Navbar from "./components/Navbar/Navbar";
 import QuoteDetails from "./pages/Quote Details/QuoteDetails";
 import Likes from "./pages/Likes/Likes";
 import UserQuotes from "./pages/User Quotes/UserQuotes";
+import SignupPage from "./pages/Signup/SignupPage";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignupPage />} />
         <Route path="/quote/:qid" element={<QuoteDetails />} />
         <Route path="/favorites" element={<Likes />} />
         <Route path="/user/:uid" element={<UserQuotes />} />

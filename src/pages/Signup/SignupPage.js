@@ -8,7 +8,7 @@ import { useHttp } from "../../hooks/use-http";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 
-const LoginPage = () => {
+const SignupPage = () => {
   const { login } = useContext(AuthContext);
   const { isLoading, error, clearError, sendRequest } = useHttp();
   const navigate = useNavigate();
@@ -17,18 +17,21 @@ const LoginPage = () => {
     initialValues: {
       user: "",
       password: "",
+      email: "",
     },
     validationSchema: Yup.object({
       user: Yup.string().trim().required(),
       password: Yup.string().trim().required(),
+      email: Yup.string().email().required(),
     }),
     onSubmit: async (values, { resetForm }) => {
       try {
         const data = await sendRequest(
-          `${process.env.REACT_APP_API}/user/auth/login`,
+          `${process.env.REACT_APP_API}/user/auth/signup`,
           "POST",
           JSON.stringify({
             nickname: values.user,
+            email: values.email,
             password: values.password,
           }),
           {
@@ -74,17 +77,36 @@ const LoginPage = () => {
             variant="outlined"
             type="password"
             className={classes["form__input"]}
+            inputProps={{
+              autoComplete: "new-password",
+            }}
           />
           {formik.errors.password && formik.touched.password && (
             <p className={classes["error-text"]}>{formik.errors.password}</p>
           )}
         </div>
+        <div className={classes["form__input-container"]}>
+          <TextField
+            placeholder="E-mail"
+            name="email"
+            id="email"
+            value={formik.values.email}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            variant="outlined"
+            type="email"
+            className={classes["form__input"]}
+          />
+          {formik.errors.email && formik.touched.email && (
+            <p className={classes["error-text"]}>{formik.errors.email}</p>
+          )}
+        </div>
         <Button variant="outlined" type="submit" disabled={isLoading}>
-          Login
+          Signup
         </Button>
       </form>
     </Card>
   );
 };
 
-export default LoginPage;
+export default SignupPage;
