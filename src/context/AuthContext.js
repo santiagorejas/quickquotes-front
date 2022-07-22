@@ -8,7 +8,6 @@ export const AuthContext = createContext({
   login: () => {},
   logout: () => {},
   favorites: [],
-  setFavorites: (qidList) => {},
   addFavorite: (qid, liked) => {},
   isFavorite: (qid) => {},
 });

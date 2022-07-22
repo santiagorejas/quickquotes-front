@@ -20,8 +20,6 @@ const QuoteDetails = () => {
   const [quoteDetails, setQuoteDetails] = useState(null);
   const [quoteLiked, setQuoteLiked] = useState(isFavorite(qid));
 
-  const { token } = useContext(AuthContext);
-
   const onAddCommentHandler = (comment) => {
     setComments((pre) => [...pre, comment]);
   };
@@ -47,7 +45,7 @@ const QuoteDetails = () => {
     fetchQuoteDetails();
   }, [sendRequest]);
 
-  const addToFavorites = async () => {
+  const addToFavorites = () => {
     setQuoteLiked((pre) => {
       addFavorite(qid, !pre);
       return !pre;

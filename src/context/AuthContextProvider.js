@@ -4,14 +4,30 @@ import { useHttp } from "../hooks/use-http";
 import { AuthContext } from "./AuthContext";
 
 const AuthContextProvider = (props) => {
-  const [favs, setFavs] = useState([]);
+  const [favorites, setFavorites] = useState([]);
 
   const { sendRequest } = useHttp();
   const { token, login, logout, userId, nickname } = useAuth();
 
-  const setFavorites = (favoritesList) => {
-    setFavs(favoritesList);
-  };
+  useEffect(() => {
+    const fetchFavorites = async () => {
+      try {
+        const data = await sendRequest(
+          `${process.env.REACT_APP_API}/quote/favorites-id`,
+          "GET",
+          null,
+          {
+            Authorization: `Bearer ${token}`,
+          }
+        );
+        setFavorites(data.quotes);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchFavorites();
+  }, [sendRequest, token]);
 
   const addFavorite = async (qid, liked) => {
     if (liked) {
@@ -32,6 +48,7 @@ const AuthContextProvider = (props) => {
           "Content-Type": "application/json",
         }
       );
+      console.log(data);
     } catch (err) {
       console.log(err);
       if (!liked) {
@@ -43,7 +60,7 @@ const AuthContextProvider = (props) => {
   };
 
   const isFavorite = (qid) => {
-    return favs.includes(qid);
+    return favorites?.includes(qid);
   };
 
   return (
@@ -55,8 +72,7 @@ const AuthContextProvider = (props) => {
         logout,
         userId,
         nickname,
-        favorites: favs,
-        setFavorites,
+        favorites,
         addFavorite,
         isFavorite,
       }}
