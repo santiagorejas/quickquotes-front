@@ -36,7 +36,6 @@ const Home = () => {
       {(isLoading || !quotes) && <LoadingSpinner />}
       {!isLoading && quotes && (
         <QuotesList
-          URL={`${process.env.REACT_APP_API}/quote`}
           quotes={quotes}
           pageCount={pageCount}
           setCurrentPage={(e, value) => {

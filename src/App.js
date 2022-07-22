@@ -9,6 +9,7 @@ import { AuthContext } from "./context/AuthContext";
 import Navbar from "./components/Navbar/Navbar";
 import QuoteDetails from "./pages/Quote Details/QuoteDetails";
 import Likes from "./pages/Likes/Likes";
+import UserQuotes from "./pages/User Quotes/UserQuotes";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/quote/:qid" element={<QuoteDetails />} />
         <Route path="/favorites" element={<Likes />} />
+        <Route path="/user/:uid" element={<UserQuotes />} />
       </Routes>
     </div>
   );

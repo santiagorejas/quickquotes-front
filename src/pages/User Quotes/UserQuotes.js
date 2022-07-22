@@ -1,28 +1,22 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import QuotesList from "../../components/Quotes List/QuotesList";
 import LoadingSpinner from "../../components/UI/Loading Spinner/LoadingSpinner";
-import { AuthContext } from "../../context/AuthContext";
 import { useHttp } from "../../hooks/use-http";
 
-const Likes = () => {
+const UserQuotes = () => {
   const { isLoading, error, clearError, sendRequest } = useHttp();
   const [quotes, setQuotes] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageCount, setPageCount] = useState(null);
 
-  const { token, isLoggedIn } = useContext(AuthContext);
+  const { uid } = useParams();
 
   useEffect(() => {
     const fetchQuotes = async () => {
       try {
         const data = await sendRequest(
-          `${process.env.REACT_APP_API}/quote/favorites?page=${currentPage}`,
-          "GET",
-          null,
-          {
-            Authorization: `Bearer ${token}`,
-          }
+          `${process.env.REACT_APP_API}/quote/user/${uid}?page=${currentPage}`
         );
         setQuotes(data.quotes);
         setPageCount(data.totalPages);
@@ -32,9 +26,7 @@ const Likes = () => {
     };
 
     fetchQuotes();
-  }, [sendRequest, currentPage, token]);
-
-  if (!isLoggedIn) return <Navigate to="/" />;
+  }, [sendRequest, currentPage, uid]);
 
   return (
     <div>
@@ -43,13 +35,14 @@ const Likes = () => {
         <QuotesList
           quotes={quotes}
           pageCount={pageCount}
-          setCurrentPage={(e) => {
-            setCurrentPage(e.currentTarget.textContent);
+          setCurrentPage={(e, value) => {
+            setCurrentPage(value);
           }}
+          currentPage={currentPage}
         />
       )}
     </div>
   );
 };
 
-export default Likes;
+export default UserQuotes;
