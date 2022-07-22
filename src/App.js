@@ -8,6 +8,7 @@ import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
 import Navbar from "./components/Navbar/Navbar";
 import QuoteDetails from "./pages/Quote Details/QuoteDetails";
+import Likes from "./pages/Likes/Likes";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/quote/:qid" element={<QuoteDetails />} />
+        <Route path="/favorites" element={<Likes />} />
       </Routes>
     </div>
   );

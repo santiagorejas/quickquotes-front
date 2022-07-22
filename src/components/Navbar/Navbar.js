@@ -39,6 +39,18 @@ const Navbar = () => {
         )}
         {isLoggedIn && (
           <li>
+            <NavLink
+              to="/favorites"
+              className={classes["navbar__link"]}
+              style={({ isActive }) => (isActive ? activeLinkStyle : undefined)}
+            >
+              <i className="fa-solid fa-heart"></i>
+              <span>Favorites</span>
+            </NavLink>
+          </li>
+        )}
+        {isLoggedIn && (
+          <li>
             <button
               onClick={logout}
               className={classes["navbar__link"]}
@@ -49,16 +61,6 @@ const Navbar = () => {
             </button>
           </li>
         )}
-        <li>
-          <NavLink
-            to="/favorites"
-            className={classes["navbar__link"]}
-            style={({ isActive }) => (isActive ? activeLinkStyle : undefined)}
-          >
-            <i className="fa-solid fa-heart"></i>
-            <span>Favorites</span>
-          </NavLink>
-        </li>
       </ul>
     </nav>
   );

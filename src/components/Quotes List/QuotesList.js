@@ -1,60 +1,35 @@
 import { Pagination } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import { useHttp } from "../../hooks/use-http";
+import React from "react";
 import Card from "../UI/Card/Card";
 import classes from "./QuotesList.module.css";
-import LoadingSpinner from "../UI/Loading Spinner/LoadingSpinner";
 import { useNavigate } from "react-router-dom";
 
-const QuotesList = (props) => {
-  const { isLoading, error, clearError, sendRequest } = useHttp();
-  const [quotes, setQuotes] = useState(null);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pageCount, setPageCount] = useState(null);
+const QuotesList = ({ quotes, pageCount, setCurrentPage }) => {
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const fetchQuotes = async () => {
-      try {
-        const data = await sendRequest(`${props.URL}?page=${currentPage}`);
-        setQuotes(data.quotes);
-        setPageCount(data.totalPages);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    fetchQuotes();
-  }, [sendRequest, currentPage]);
 
   if (quotes?.length === 0) return <h1>No quotes were found</h1>;
 
   return (
     <div className={classes["quotes-list-container"]}>
-      {(isLoading || !quotes) && <LoadingSpinner />}
-      {!isLoading && quotes && (
-        <ul className={classes["quotes-list"]}>
-          {quotes.map((quote) => (
-            <li onClick={() => navigate(`/quote/${quote._id}`)}>
-              <Card className={classes["quote"]}>
-                <div className={classes["quote__content"]}>
-                  <i className="fa-solid fa-quote-left"></i>
-                  <h3>{quote.content}</h3>
-                  <i className="fa-solid fa-quote-right"></i>
-                </div>
-                <p className={classes["quote__author"]}>{quote.author}</p>
-              </Card>
-            </li>
-          ))}
-        </ul>
-      )}
+      <ul className={classes["quotes-list"]}>
+        {quotes.map((quote) => (
+          <li onClick={() => navigate(`/quote/${quote._id}`)}>
+            <Card className={classes["quote"]}>
+              <div className={classes["quote__content"]}>
+                <i className="fa-solid fa-quote-left"></i>
+                <h3>{quote.content}</h3>
+                <i className="fa-solid fa-quote-right"></i>
+              </div>
+              <p className={classes["quote__author"]}>{quote.author}</p>
+            </Card>
+          </li>
+        ))}
+      </ul>
       <Pagination
         count={pageCount}
         variant="outlined"
         className={classes["quotes-list__pagination"]}
-        onChange={(e) => {
-          setCurrentPage(e.currentTarget.textContent);
-        }}
+        onChange={setCurrentPage}
       />
     </div>
   );
