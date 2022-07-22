@@ -29,3 +29,12 @@
   display: inline;
   font-weight: 300;
 }
+
+.quote-details__fav-btn {
+  color: white !important;
+  padding-inline: 1rem !important;
+}
+
+.quote-details__fav-btn span {
+  margin-left: 0.5rem;
+}

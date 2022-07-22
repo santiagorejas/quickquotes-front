@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Card from "../../components/UI/Card/Card";
 import { useHttp } from "../../hooks/use-http";
@@ -6,14 +6,21 @@ import LoadingSpinner from "../../components/UI/Loading Spinner/LoadingSpinner";
 import classes from "./QuoteDetails.module.css";
 import NewComment from "../../components/Comments/NewComment";
 import Comments from "../../components/Comments/Comments";
+import { Button } from "@mui/material";
+import { AuthContext } from "../../context/AuthContext";
 
 const QuoteDetails = () => {
   const { qid } = useParams();
 
   const { isLoading, error, clearError, sendRequest } = useHttp();
 
+  const { isFavorite, addFavorite } = useContext(AuthContext);
+
   const [comments, setComments] = useState([]);
   const [quoteDetails, setQuoteDetails] = useState(null);
+  const [quoteLiked, setQuoteLiked] = useState(isFavorite(qid));
+
+  const { token } = useContext(AuthContext);
 
   const onAddCommentHandler = (comment) => {
     setComments((pre) => [...pre, comment]);
@@ -40,6 +47,13 @@ const QuoteDetails = () => {
     fetchQuoteDetails();
   }, [sendRequest]);
 
+  const addToFavorites = async () => {
+    setQuoteLiked((pre) => {
+      addFavorite(qid, !pre);
+      return !pre;
+    });
+  };
+
   if (isLoading || !quoteDetails) return <LoadingSpinner />;
 
   return (
@@ -49,6 +63,16 @@ const QuoteDetails = () => {
         <h1>{quoteDetails.content}</h1>
         <i className="fa-solid fa-quote-right"></i>
       </div>
+      <Button
+        className={classes["quote-details__fav-btn"]}
+        onClick={addToFavorites}
+      >
+        <i
+          style={{ color: quoteLiked ? "red" : "white" }}
+          className="fa-solid fa-heart"
+        ></i>
+        <span>{quoteLiked ? "Remove from favorites" : "Add to favorites"}</span>
+      </Button>
       <Comments comments={comments} onDeleteComment={onDeleteCommentHandler} />
       <NewComment quoteId={qid} onAddComment={onAddCommentHandler} />
     </Card>
