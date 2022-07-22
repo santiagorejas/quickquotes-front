@@ -3,11 +3,15 @@ import { useNavigate, useParams } from "react-router-dom";
 import Card from "../../components/UI/Card/Card";
 import { useHttp } from "../../hooks/use-http";
 import LoadingSpinner from "../../components/UI/Loading Spinner/LoadingSpinner";
-import classes from "./QuoteDetails.module.css";
 import NewComment from "../../components/Comments/NewComment";
 import Comments from "../../components/Comments/Comments";
-import { Button } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 import { AuthContext } from "../../context/AuthContext";
+import * as Yup from "yup";
+
+import classes from "./QuoteDetails.module.css";
+import formClasses from "../../styles/Forms.module.css";
+import { useFormik } from "formik";
 
 const QuoteDetails = () => {
   const { qid } = useParams();
@@ -20,6 +24,34 @@ const QuoteDetails = () => {
   const [quoteDetails, setQuoteDetails] = useState(null);
   const [quoteLiked, setQuoteLiked] = useState(isFavorite(qid));
   const navigate = useNavigate();
+  const [isEditing, setIsEditing] = useState(false);
+  const formik = useFormik({
+    initialValues: {
+      content: "",
+    },
+    validationSchema: Yup.object({
+      content: Yup.string().trim().required(),
+    }),
+    onSubmit: async (values, actions) => {
+      try {
+        const data = await sendRequest(
+          `${process.env.REACT_APP_API}/quote/${qid}`,
+          "PATCH",
+          JSON.stringify({ content: values.content }),
+          {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          }
+        );
+        setQuoteDetails((pre) => {
+          return { ...pre, content: formik.values.content };
+        });
+        setIsEditing(false);
+      } catch (err) {
+        console.log(err);
+      }
+    },
+  });
 
   const onAddCommentHandler = (comment) => {
     setComments((pre) => [...pre, comment]);
@@ -37,6 +69,7 @@ const QuoteDetails = () => {
         );
         setComments(data.comments);
         setQuoteDetails(data.quote);
+        formik.setFieldValue("content", data.quote.content);
         console.log(data);
       } catch (err) {
         console.log(err);
@@ -90,9 +123,40 @@ const QuoteDetails = () => {
       </Button>
       {quoteDetails.author === nickname && (
         <Button className={classes["quote-details__btn"]} onClick={deleteQuote}>
-          <i className="fa-solid fa-heart"></i>
+          <i className="fa-solid fa-trash"></i>
           <span>Delete quote</span>
         </Button>
+      )}
+      {quoteDetails.author === nickname && !isEditing && (
+        <Button
+          className={classes["quote-details__btn"]}
+          onClick={() => setIsEditing(true)}
+        >
+          <i className="fa-solid fa-pen"></i>
+          <span>Edit quote</span>
+        </Button>
+      )}
+      {quoteDetails.author === nickname && isEditing && (
+        <Card className={classes["form__container"]}>
+          <form className={formClasses["form"]} onSubmit={formik.handleSubmit}>
+            <TextField
+              name="content"
+              id="content"
+              onChange={formik.handleChange}
+              value={formik.values.content}
+              className={formClasses["form__input"]}
+              variant="outlined"
+              multiline
+              rows={3}
+            />
+            <Button variant="outlined" type="submit">
+              Save edit
+            </Button>
+            <Button variant="outlined" onClick={() => setIsEditing(false)}>
+              Cancel
+            </Button>
+          </form>
+        </Card>
       )}
       <Comments comments={comments} onDeleteComment={onDeleteCommentHandler} />
       <NewComment quoteId={qid} onAddComment={onAddCommentHandler} />
